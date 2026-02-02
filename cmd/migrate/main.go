@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
