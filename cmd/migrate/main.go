@@ -12,7 +12,7 @@ import (
 
 const (
 	dialect  = "pgx"
-	dbString = "host=localhost user=myapp_user password=myapp_pass db=myapp_db port=5432 sslmode=disable"
+	dbString = "host=localhost user=myapp_user password=myapp_pass dbname=myapp_db port=5432 sslmode=disable"
 )
 
 var (
@@ -26,26 +26,26 @@ func main() {
 
 	args := flags.Args()
 	if len(args) == 0 || args[0] == "-h" || args[0] == "--help" {
-		usage()
+		flags.Usage()
 		return
 	}
 
 	command := args[0]
 
 	db, err := goose.OpenDBWithDriver(dialect, dbString)
-    if err != nil {
-        log.Fatal(err.Error())
-    }
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
 
-    defer func() {
-        if err := db.Close(); err != nil {
-            log.Fatal(err.Error())
-        }
-    }()
+	defer func() {
+		if err := db.Close(); err != nil {
+			log.Fatalf(err.Error())
+		}
+	}()
 
-    if err := goose.Run(command, db, *dir, args[1:]...); err != nil {
-        log.Fatalf("migrate %v: %v", err)
-    }
+	if err := goose.Run(command, db, *dir, args[1:]...); err != nil {
+		log.Fatalf("migrate %v: %v", command, err)
+	}
 }
 
 func usage() {
@@ -54,7 +54,7 @@ func usage() {
 	fmt.Println(usageCommands)
 }
 
-const (
+var (
 	usagePrefix = `Usage: migrate COMMAND
 Examples:
     migrate status
