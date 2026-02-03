@@ -3,6 +3,7 @@ module github.com/darjun/learning-cloud-native-go
 go 1.25.4
 
 require (
+	github.com/go-chi/chi/v5 v5.2.4
 	github.com/jackc/pgx/v5 v5.8.0
 	github.com/joeshaw/envdecode v0.0.0-20200121155833-099f1fc765bd
 	github.com/pressly/goose/v3 v3.26.0
